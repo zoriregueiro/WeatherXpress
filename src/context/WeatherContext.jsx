@@ -1,5 +1,4 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
 import { useWeatherData } from "../hooks/useWeatherData";
 
 const WeatherContext = createContext(null);
@@ -7,7 +6,6 @@ const WeatherContext = createContext(null);
 export const useWeather = () => useContext(WeatherContext);
 
 export const WeatherProvider = ({ children }) => {
-  const history = useHistory();
   const {
     weatherData,
     city,
@@ -19,7 +17,14 @@ export const WeatherProvider = ({ children }) => {
 
   return (
     <WeatherContext.Provider
-      value={{ city, weatherData, error, handleDeleteData, loading }}>
+      value={{
+        city,
+        weatherData,
+        error,
+        handleDeleteData,
+        handleOnChangeCity,
+        loading,
+      }}>
       {children}
     </WeatherContext.Provider>
   );

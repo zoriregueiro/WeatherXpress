@@ -1,5 +1,3 @@
-import { Redirect } from "react-router-dom";
-
 // import Error404 from "@/pages/Error/Error404";
 
 import SelectCity from "../pages/SelectCity";

@@ -1,4 +1,5 @@
-import { Routes, Route } from "react-router-dom";
+import React from "react";
+import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import { appRoutes } from "./Routes/allRoutes";
 

@@ -6,12 +6,12 @@ import { apiKey } from "../constants/Api";
 export function useWeatherData() {
   const { t } = useTranslation();
 
-  const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric&lang=es`;
-
   const [city, setCity] = useState("");
   const [error, setError] = useState("");
   const [weatherData, setWeatherData] = useState(null);
   const [loading, setLoading] = useState(defaultLoading);
+
+  const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric&lang=es`;
 
   useEffect(() => {
     const getWeatherData = async () => {

@@ -1,0 +1,93 @@
+.current-weather {
+  display: flex;
+}
+
+.icon-current {
+  width: 150px;
+  height: 150px;
+}
+
+.city-name {
+  font-size: 40px;
+}
+
+.search-input {
+  border: none;
+  border-radius: 18px;
+  background-color: rgba(255, 255, 255, 0.603);
+  height: 50px;
+  width: 60vh;
+}
+.info-text {
+  color: white;
+  padding-top: 10px;
+}
+.search-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.body {
+  width: 100vh;
+  height: 100vh;
+}
+
+.header-position {
+  display: flex;
+  justify-content: space-between;
+}
+.switch-back {
+  background-color: rgba(70, 70, 70, 0.863);
+  position: relative;
+  width: 60px;
+  height: 30px;
+  border-radius: 30px;
+}
+
+.label-switch {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  padding: 10px;
+  border-radius: 50px;
+}
+
+.input-witch {
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  cursor: pointer;
+}
+
+.span-switch {
+  position: absolute;
+  top: 3px;
+  width: 24px;
+  height: 24px;
+  background-color: #fff;
+  border-radius: 50%;
+  transition: left 0.3s;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.switch-text {
+  color: #fff;
+  margin-right: 10px;
+  margin-left: 10px;
+  font-weight: bold;
+}
+
+.switch-position {
+  margin-top: 30px;
+}
+
+.search-window {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: calc(100vh - 130px);
+}

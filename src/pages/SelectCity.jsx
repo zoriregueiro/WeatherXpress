@@ -1,31 +1,43 @@
 import React, { useState } from "react";
+import "../css/styles.scss";
+import { useWeatherData } from "../hooks/useWeatherData";
 
-import { useWeather } from "../context/WeatherContext";
+const SelectCity = () => {
+  const { handleOnChangeCity, error } = useWeatherData();
 
-function SelectCity() {
-  const { handleOnChangeCity, city, error } = useWeather();
+  const [inputValue, setInputValue] = useState("");
+
+  const handleInputChange = (e) => {
+    setInputValue(e.target.value);
+  };
+
+  const handleSubmit = () => {
+    handleOnChangeCity(inputValue);
+  };
 
   const handleKeyPress = (e) => {
     if (e.key === "Enter") {
-      fetchWeather();
+      handleSubmit();
     }
   };
 
   return (
-    <div className="App">
-      <h1>Consulta el clima</h1>
-      <input
-        type="text"
-        value={city}
-        // onChange={handleInputChange}
-        onKeyPress={handleKeyPress}
-        placeholder="Escribe una ciudad"
-      />
-      <button onClick={handleOnChangeCity}>Buscar</button>
+    <div className="search-window">
+      <div id="search-container" className="search-container ">
+        <input
+          type="text"
+          value={inputValue}
+          onChange={handleInputChange}
+          onKeyPress={handleKeyPress}
+          placeholder="Escribe una ciudad"
+          className="search-input"
+        />
+        <button onClick={handleSubmit}>Buscar</button>
+      </div>
 
-      {error && <div className="error">{error}</div>}
+      {error && <div className="info-text">{error}</div>}
     </div>
   );
-}
+};
 
 export default SelectCity;

@@ -1,35 +1,70 @@
 import { useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
 import { defaultLoading } from "../constants/defaultStates";
-import { apiKey } from "../constants/Api";
+import { getWeatherDataApi, getWeatherHourly } from "../services/api.Weather";
+import { useNavigate } from "react-router-dom";
 
-export function useWeatherData() {
-  const { t } = useTranslation();
+export const useWeatherData = () => {
+  let navigate = useNavigate();
 
   const [city, setCity] = useState("");
   const [error, setError] = useState("");
   const [weatherData, setWeatherData] = useState(null);
   const [loading, setLoading] = useState(defaultLoading);
-
-  const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric&lang=es`;
+  const [unit, setUnit] = useState("metric");
+  const [weatherHourly, setWeatherHourly] = useState(null);
 
   useEffect(() => {
     const getWeatherData = async () => {
       setLoading(true);
 
-      if (city.trim() === "") {
+      if (city === "") {
         setError("Por favor ingresa el nombre de una ciudad.");
         return;
       }
 
       try {
         setLoading((prev) => ({ ...prev, weather: true }));
-        const response = await axios.get(apiUrl);
-        setWeatherData(response.data);
+
+        const currentData = await getWeatherDataApi(city, unit, "es");
+        console.log(currentData);
+
+        setWeatherData({
+          temp: currentData.main.temp,
+          icon: currentData.weather[0].icon,
+          humidity: currentData.main.humidity,
+          wind: currentData.wind.speed,
+          hour: currentData.dt,
+          description: currentData.weather[0].description,
+          city: currentData.name,
+          country: currentData.sys.country,
+        });
+        const lat = currentData.coord.lat;
+        const lon = currentData.coord.lon;
+
+        console.log(lat, lon);
+
+        const hourlyData = await getWeatherHourly(lat, lon, unit);
+
+        console.log(hourlyData);
+
+        const customArray = hourlyData?.list?.map((item) => ({
+          temp: item.main.temp,
+          icon: item.weather[0].icon,
+          humidity: item.main.humidity,
+          wind: item.wind.speed,
+          hour: item.dt,
+          description: item.weather[0].description,
+        }));
+        const location = currentData.name;
+
+        setWeatherHourly(customArray);
         setError("");
+        navigate(`/weather-view`);
       } catch (err) {
+        console.log(err);
         setError("Ciudad no encontrada o error en la petición.");
         setWeatherData(null);
+        setWeatherHourly(null);
       } finally {
         setLoading((prev) => ({ ...prev, weather: false }));
       }
@@ -39,6 +74,10 @@ export function useWeatherData() {
 
   const handleOnChangeCity = (item) => {
     setCity(item);
+  };
+
+  const handleOnChangeUnit = (unit) => {
+    setUnit(unit);
   };
 
   const handleDeleteData = () => {
@@ -62,9 +101,12 @@ export function useWeatherData() {
   return {
     weatherData,
     city,
+    unit,
+    weatherHourly,
     handleDeleteData,
     handleOnChangeCity,
+    handleOnChangeUnit,
     loading,
     error,
   };
-}
+};

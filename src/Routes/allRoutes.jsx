@@ -4,8 +4,8 @@ import SelectCity from "../pages/SelectCity";
 import WeatherView from "../pages/WeatherView";
 
 const appRoutes = [
-  { path: "/WeatherView", element: <SelectCity /> },
-  { path: "/WeatherView/:city", element: <WeatherView /> },
+  { path: "/", element: <SelectCity /> },
+  { path: "/weather-view", element: <WeatherView /> },
 
   //   { path: "*", component: Error404 },
 ];

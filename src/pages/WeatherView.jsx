@@ -1,19 +1,35 @@
-import React, { useState } from "react";
+import React from "react";
+import "../css/styles.scss";
+import WeatherForecast from "../Components/WeatherForecast";
+import WeatherCurrent from "../Components/WeatherCurrent";
+import { useWeatherData } from "../hooks/useWeatherData";
 
-function WeatherView() {
+const WeatherView = () => {
+  const {
+    weatherData,
+    city,
+    unit,
+    weatherHourly,
+    handleDeleteData,
+    loading,
+    error,
+  } = useWeatherData();
+
+  const isLoading = loading.forecast && loading.weather;
+
+  console.log(isLoading, weatherData, weatherHourly);
+
   return (
-    <div className="App">
-      {weatherData && (
-        <div className="weather">
-          <h2>{weatherData.name}</h2>
-          <p>Temperatura: {weatherData.main.temp}°C</p>
-          <p>Descripción: {weatherData.weather[0].description}</p>
-          <p>Humedad: {weatherData.main.humidity}%</p>
-          <p>Viento: {weatherData.wind.speed} m/s</p>
-        </div>
+    <React.Fragment>
+      {isLoading && "estoy cargando"}
+      {!isLoading && weatherData && (
+        <WeatherCurrent data={weatherData} city={city} unit={unit} />
       )}
-    </div>
+
+      {weatherHourly &&
+        weatherHourly.map((item) => <WeatherForecast data={item} />)}
+    </React.Fragment>
   );
-}
+};
 
 export default WeatherView;

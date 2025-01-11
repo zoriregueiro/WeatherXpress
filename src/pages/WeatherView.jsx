@@ -1,8 +1,8 @@
 import React from "react";
 import "../css/styles.scss";
-import WeatherForecast from "../Components/WeatherForecast";
 import WeatherCurrent from "../Components/WeatherCurrent";
-import { useWeatherData } from "../hooks/useWeatherData";
+import WeatherForecast from "../Components/WeatherForecast";
+import { useWeather } from "../context/WeatherContext";
 
 const WeatherView = () => {
   const {
@@ -13,7 +13,7 @@ const WeatherView = () => {
     handleDeleteData,
     loading,
     error,
-  } = useWeatherData();
+  } = useWeather();
 
   const isLoading = loading.forecast && loading.weather;
 
@@ -26,8 +26,9 @@ const WeatherView = () => {
         <WeatherCurrent data={weatherData} city={city} unit={unit} />
       )}
 
-      {weatherHourly &&
-        weatherHourly.map((item) => <WeatherForecast data={item} />)}
+      {weatherHourly.map((item) => (
+        <WeatherForecast data={item} />
+      ))}
     </React.Fragment>
   );
 };

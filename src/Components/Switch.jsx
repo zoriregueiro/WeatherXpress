@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import "../css/styles.scss";
-import { useWeatherData } from "../hooks/useWeatherData";
+import { useWeather } from "../context/WeatherContext";
 
 const Switch = () => {
-  const { handleOnChangeUnit } = useWeatherData();
+  const { handleOnChangeUnit } = useWeather();
 
   const [selectedUnit, setSelectedUnit] = useState(false);
 
@@ -12,7 +12,7 @@ const Switch = () => {
   };
 
   useEffect(() => {
-    const unit = selectedUnit === false ? "metric" : "imperial";
+    const unit = selectedUnit ? "imperial" : "metric";
     handleOnChangeUnit(unit);
   }, [selectedUnit]);
 

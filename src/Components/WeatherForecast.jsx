@@ -5,8 +5,8 @@ const WeatherForecast = ({ data }) => {
   return (
     <div className="weather">
       {/* <h2>{weatherData.name}</h2> */}
-      <p> {Math.trunc(data.temp)} °C</p>
-      <p> {Math.trunc(data.wind)} km/h</p>
+      <p> {Math.round(data.temp)} °C</p>
+      <p> {Math.round(data.wind)} km/h</p>
       <p>{data.hour}</p>
     </div>
   );

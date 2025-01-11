@@ -1,10 +1,14 @@
 import React from "react";
 import "../css/styles.scss";
 
+const { VITE_ICON_WEATHER } = import.meta.env;
+
 const WeatherCurrent = ({ data, city, unit }) => {
   console.log(data);
+
   const icon = data?.icon;
-  const iconUrl = `https://openweathermap.org/img/wn/${icon}.png`;
+  const iconUrl = `${VITE_ICON_WEATHER}${icon}.png`;
+
   return (
     <div className="current-weather">
       {/* <h2>{weatherData.name}</h2> */}
@@ -12,10 +16,10 @@ const WeatherCurrent = ({ data, city, unit }) => {
       <p className="city-name">{city}</p>
       <p>
         {" "}
-        {Math.trunc(data.temp)} {unit === "metric" ? "ºC" : "ºF"}
+        {Math.round(data.temp)} {unit === "metric" ? "ºC" : "ºF"}
       </p>
       <p> {data.humidity}%</p>
-      <p> {Math.trunc(data.wind)} km/h</p>
+      <p> {Math.round(data.wind)} km/h</p>
     </div>
   );
 };

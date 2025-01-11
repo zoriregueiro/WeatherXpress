@@ -4,14 +4,14 @@ import { getWeatherDataApi, getWeatherHourly } from "../services/api.Weather";
 import { useNavigate } from "react-router-dom";
 
 export const useWeatherData = () => {
-  let navigate = useNavigate();
+  const navigate = useNavigate();
 
   const [city, setCity] = useState("");
   const [error, setError] = useState("");
   const [weatherData, setWeatherData] = useState(null);
   const [loading, setLoading] = useState(defaultLoading);
   const [unit, setUnit] = useState("metric");
-  const [weatherHourly, setWeatherHourly] = useState(null);
+  const [weatherHourly, setWeatherHourly] = useState([]);
 
   useEffect(() => {
     const getWeatherData = async () => {

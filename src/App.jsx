@@ -2,8 +2,8 @@ import React from "react";
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import { appRoutes } from "./Routes/allRoutes";
-import { LogpSvg } from "./svg/Logo";
 import Header from "./Components/Header";
+import { WeatherProvider } from "./context/WeatherContext";
 
 function App() {
   return (
@@ -19,4 +19,11 @@ function App() {
   );
 }
 
-export default App;
+const AppWrapper = () => {
+  return (
+    <WeatherProvider>
+      <App />
+    </WeatherProvider>
+  );
+};
+export default AppWrapper;

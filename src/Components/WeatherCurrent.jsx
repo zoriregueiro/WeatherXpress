@@ -1,25 +1,43 @@
 import React from "react";
 import "../css/styles.scss";
+import { useWeather } from "../context/WeatherContext";
 
-const { VITE_ICON_WEATHER } = import.meta.env;
+const WeatherCurrent = () => {
+  const { formatTemperature, getIconUrl, weatherData, unit } = useWeather();
 
-const WeatherCurrent = ({ data, city, unit }) => {
-  console.log(data);
-
-  const icon = data?.icon;
-  const iconUrl = `${VITE_ICON_WEATHER}${icon}.png`;
+  const formatWind = (wind) => {
+    return `${Math.round(wind)} km/h`;
+  };
 
   return (
     <div className="current-weather">
-      {/* <h2>{weatherData.name}</h2> */}
-      <img src={iconUrl} alt={data?.description} className="icon-current" />
-      <p className="city-name">{city}</p>
-      <p>
-        {" "}
-        {Math.round(data.temp)} {unit === "metric" ? "ºC" : "ºF"}
-      </p>
-      <p> {data.humidity}%</p>
-      <p> {Math.round(data.wind)} km/h</p>
+      <img
+        src={getIconUrl(weatherData.icon)}
+        alt={weatherData?.description}
+        className="icon-current"
+      />
+      <div className="content-container ">
+        <p className="large-name ">{weatherData.city}</p>
+        <p className="small-name ">{weatherData.country}</p>
+      </div>
+      <div className="content-container ">
+        <p className="large-name ">
+          {formatTemperature(weatherData.temp, unit)}
+        </p>
+        <p className="small-name ">Temperatura</p>
+      </div>
+      <div className="content-container ">
+        <p className="large-name ">{weatherData.humidity} %</p>
+        <p className="small-name ">Humedad</p>
+      </div>
+      <div className="content-container ">
+        <p className="large-name ">{weatherData.humidity} %</p>
+        <p className="small-name ">Humedad</p>
+      </div>
+      <div className="content-container ">
+        <p className="large-name ">{formatWind(weatherData.wind)} </p>
+        <p className="small-name ">Viento</p>
+      </div>
     </div>
   );
 };

@@ -5,15 +5,7 @@ import WeatherForecast from "../Components/WeatherForecast";
 import { useWeather } from "../context/WeatherContext";
 
 const WeatherView = () => {
-  const {
-    weatherData,
-    city,
-    unit,
-    weatherHourly,
-    handleDeleteData,
-    loading,
-    error,
-  } = useWeather();
+  const { weatherData, weatherHourly, loading } = useWeather();
 
   const isLoading = loading.forecast && loading.weather;
 
@@ -21,14 +13,20 @@ const WeatherView = () => {
 
   return (
     <React.Fragment>
-      {isLoading && "estoy cargando"}
-      {!isLoading && weatherData && (
-        <WeatherCurrent data={weatherData} city={city} unit={unit} />
-      )}
-
-      {weatherHourly.map((item) => (
-        <WeatherForecast data={item} />
-      ))}
+      <div className="container-current">
+        {isLoading && "estoy cargando"}
+        {!isLoading && weatherData && <WeatherCurrent />}
+        {weatherHourly.map(
+          (item, index) =>
+            index < 1 && <WeatherForecast data={item} index={index} />
+        )}
+      </div>
+      <div className="container-forecast">
+        {weatherHourly.map(
+          (item, index) =>
+            index > 0 && <WeatherForecast data={item} index={index} />
+        )}
+      </div>
     </React.Fragment>
   );
 };

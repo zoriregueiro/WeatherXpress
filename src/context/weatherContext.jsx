@@ -1,23 +1,30 @@
-// #region IMPORTS
 import React, { createContext, useContext } from "react";
 import { useWeatherData } from "../hooks/useWeatherData";
+
+const { VITE_ICON_WEATHER } = import.meta.env;
 
 const WeatherContext = createContext();
 
 export const useWeather = () => useContext(WeatherContext);
 
-const WeatherProvider = ({ children }) => {
+export const WeatherProvider = ({ children }) => {
   const {
     weatherData,
     city,
     unit,
     weatherHourly,
+    timezone,
     handleDeleteData,
     handleOnChangeCity,
     handleOnChangeUnit,
     loading,
     error,
   } = useWeatherData();
+
+  const getIconUrl = (icon) => `${VITE_ICON_WEATHER}${icon}.png`;
+  const formatTemperature = (temp, unit) => {
+    return `${Math.round(temp)} ${unit === "metric" ? "ºC" : "ºF"}`;
+  };
 
   return (
     <WeatherContext.Provider
@@ -26,9 +33,12 @@ const WeatherProvider = ({ children }) => {
         city,
         unit,
         weatherHourly,
+        timezone,
         handleDeleteData,
         handleOnChangeCity,
         handleOnChangeUnit,
+        getIconUrl,
+        formatTemperature,
         loading,
         error,
       }}>
@@ -36,5 +46,3 @@ const WeatherProvider = ({ children }) => {
     </WeatherContext.Provider>
   );
 };
-
-export { WeatherProvider };

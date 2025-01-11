@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { defaultLoading } from "../constants/defaultStates";
 import { getWeatherDataApi, getWeatherHourly } from "../services/api.Weather";
 import { useNavigate } from "react-router-dom";
+import moment from "moment";
 
 export const useWeatherData = () => {
   const navigate = useNavigate();
@@ -12,7 +13,7 @@ export const useWeatherData = () => {
   const [loading, setLoading] = useState(defaultLoading);
   const [unit, setUnit] = useState("metric");
   const [weatherHourly, setWeatherHourly] = useState([]);
-
+  const [timezone, setTimezone] = useState(0);
   useEffect(() => {
     const getWeatherData = async () => {
       setLoading(true);
@@ -38,6 +39,9 @@ export const useWeatherData = () => {
           city: currentData.name,
           country: currentData.sys.country,
         });
+
+        setTimezone(currentData.timezone);
+
         const lat = currentData.coord.lat;
         const lon = currentData.coord.lon;
 
@@ -45,19 +49,30 @@ export const useWeatherData = () => {
 
         const hourlyData = await getWeatherHourly(lat, lon, unit);
 
-        console.log(hourlyData);
+        const groupByDayAsArray = (data) => {
+          const grouped = data.reduce((acc, item) => {
+            const day = moment(item.dt * 1000).format("YYYY-MM-DD");
+            if (!acc[day]) acc[day] = [];
+            acc[day].push(item);
+            return acc;
+          }, {});
 
-        const customArray = hourlyData?.list?.map((item) => ({
-          temp: item.main.temp,
-          icon: item.weather[0].icon,
-          humidity: item.main.humidity,
-          wind: item.wind.speed,
-          hour: item.dt,
-          description: item.weather[0].description,
-        }));
-        const location = currentData.name;
+          return Object.entries(grouped).map(([date, items]) => ({
+            date,
+            items,
+          }));
+        };
 
-        setWeatherHourly(customArray);
+        // const customArray = hourlyData?.list?.map((item) => ({
+        //   temp: item.main.temp,
+        //   icon: item.weather[0].icon,
+        //   humidity: item.main.humidity,
+        //   wind: item.wind.speed,
+        //   hour: item.dt,
+        //   description: item.weather[0].description,
+        // }));
+
+        setWeatherHourly(groupByDayAsArray(hourlyData.list));
         setError("");
         navigate(`/weather-view`);
       } catch (err) {
@@ -103,6 +118,7 @@ export const useWeatherData = () => {
     city,
     unit,
     weatherHourly,
+    timezone,
     handleDeleteData,
     handleOnChangeCity,
     handleOnChangeUnit,

@@ -6,13 +6,24 @@ import moment from "moment";
 
 export const useWeatherData = () => {
   const navigate = useNavigate();
-
+  const [favCities, setFavCities] = useState([]);
   const [city, setCity] = useState("");
   const [error, setError] = useState("");
   const [weatherData, setWeatherData] = useState(null);
   const [loading, setLoading] = useState(defaultLoading);
   const [unit, setUnit] = useState("metric");
   const [weatherHourly, setWeatherHourly] = useState([]);
+
+  useEffect(() => {
+    const savedCities = JSON.parse(localStorage.getItem("favCities"));
+    if (savedCities) {
+      setFavCities(savedCities);
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("favCities", JSON.stringify(favCities));
+  }, [favCities]);
 
   useEffect(() => {
     const getWeatherData = async () => {
@@ -27,7 +38,6 @@ export const useWeatherData = () => {
         setLoading((prev) => ({ ...prev, weather: true }));
 
         const currentData = await getWeatherDataApi(city, unit, "es");
-        console.log(currentData);
 
         setWeatherData({
           temp: currentData.main.temp,
@@ -42,7 +52,7 @@ export const useWeatherData = () => {
 
         const lat = currentData.coord.lat;
         const lon = currentData.coord.lon;
-
+        const locationCity = currentData.name.replace(/\s+/g, "");
         const hourlyData = await getWeatherHourly(lat, lon, unit);
 
         const groupByDayAsArray = (data) => {
@@ -61,7 +71,7 @@ export const useWeatherData = () => {
 
         setWeatherHourly(groupByDayAsArray(hourlyData.list));
         setError("");
-        navigate(`/weather-view`);
+        navigate(`/weather-view/${locationCity}`);
       } catch (err) {
         console.log(err);
         setError("City not found or error in the request.");
@@ -80,6 +90,16 @@ export const useWeatherData = () => {
 
   const handleOnChangeUnit = (unit) => {
     setUnit(unit);
+  };
+
+  const handleAddCiudad = (selectedCity) => {
+    if (!favCities.includes(selectedCity)) {
+      setFavCities([...favCities, selectedCity]);
+    }
+  };
+
+  const handleDeleteCiudad = (cityToDelete) => {
+    setFavCities(favCities.filter((item) => item !== cityToDelete));
   };
 
   const handleDeleteData = () => {
@@ -103,11 +123,14 @@ export const useWeatherData = () => {
   return {
     weatherData,
     city,
+    favCities,
     unit,
     weatherHourly,
     handleDeleteData,
     handleOnChangeCity,
     handleOnChangeUnit,
+    handleAddCiudad,
+    handleDeleteCiudad,
     loading,
     error,
   };

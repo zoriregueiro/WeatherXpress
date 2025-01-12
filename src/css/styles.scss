@@ -1,4 +1,5 @@
 .current-weather {
+  position: relative;
   display: flex;
   justify-content: space-evenly;
   color: #fff;
@@ -9,6 +10,21 @@
   height: 250px;
   border-radius: 50px;
   margin-bottom: 10px;
+  .icon-fav {
+    position: absolute;
+    top: 20px;
+    right: 40px;
+    cursor: pointer;
+    border: none;
+    background-color: transparent;
+    transition: none;
+  }
+  button {
+    border: none;
+    background-color: transparent;
+    transition: none;
+    outline: none;
+  }
   .icon-current {
     width: 110px;
     height: 110px;
@@ -95,63 +111,143 @@
 }
 
 .search-window {
-  display: flex;
+  height: calc(100vh - 80px);
+  display: grid;
+  grid-template-columns: 5fr 1fr;
   justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  height: calc(100vh - 130px);
-  .icon-current {
-    width: 80px;
-    height: 80px;
-  }
-
-  .search-container {
+  align-items: flex-start;
+  flex-direction: row;
+  .search-section {
+    height: 100%;
     display: flex;
-    align-items: center;
+    flex-direction: column;
     justify-content: start;
-    gap: 10px;
-    .search-input {
-      border: none;
-      border-radius: 18px;
-      background-color: rgba(255, 255, 255, 0.603);
-      height: 50px;
-      width: 60vh;
-      padding-inline-start: 15px;
+    align-items: center;
+
+    .box-search-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .icon-current {
+      width: 80px;
+      height: 80px;
+    }
+
+    .search-container {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: start;
+      gap: 10px;
+      flex-direction: row;
+      .search-button {
+        color: #fff;
+        background-color: #000;
+        font-weight: 300;
+      }
+      .search-input {
+        border: none;
+        border-radius: 18px;
+        background-color: rgba(255, 255, 255, 0.603);
+        height: 50px;
+        width: 65vh;
+        padding-inline-start: 15px;
+      }
+    }
+    .search-title {
+      color: #fff;
+      font-size: 40px;
+      font-weight: 300;
+    }
+    .info-text {
+      color: rgb(241, 241, 241);
+      padding-top: 20px;
+      font-weight: 300;
     }
   }
-  .search-title {
-    color: #fff;
-    font-size: 40px;
-  }
-  .info-text {
-    color: rgb(241, 241, 241);
-    padding-top: 20px;
+  .fav-container {
+    padding-right: 15px;
+    height: 100%;
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 20px;
+    .box-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+
+      .fav-title {
+        color: #fff;
+        font-size: 25px;
+        font-weight: 300;
+      }
+    }
+    .container-cities {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+
+      .empty-container {
+        flex-wrap: wrap;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+      .empty-text {
+        color: #fff;
+        font-size: 16px;
+        font-weight: 300;
+      }
+    }
   }
 }
 
+.fav-card {
+  border-radius: 20px;
+  background-color: #ffffff60;
+  width: 100%;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  p {
+    color: #fff;
+    font-size: 18px;
+    font-weight: 300;
+    margin-block-start: 0;
+    margin-block-end: 0;
+  }
+}
 .container-flex {
   display: flex;
 }
 
 .container-forecast {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  grid-template-columns: repeat(5, 1fr);
   gap: 10px;
   padding: 10px;
-  justify-content: center;
 }
 
 .container-date {
   color: #fff;
   padding: 10px;
 
-  display: flex;
   margin: 10px;
-  justify-content: center;
+
   gap: 12px;
   border-radius: 20px;
   font-size: 20px;
   font-weight: 300;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
 }
 
 .container-date-2 {

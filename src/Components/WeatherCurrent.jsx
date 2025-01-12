@@ -1,16 +1,38 @@
 import React from "react";
 import "../css/styles.scss";
 import { useWeather } from "../context/WeatherContext";
+import { StarSvg } from "../svg/Star";
 
 const WeatherCurrent = () => {
-  const { formatTemperature, getIconUrl, weatherData, unit } = useWeather();
+  const {
+    formatTemperature,
+    getIconUrl,
+    weatherData,
+    unit,
+    favCities,
+    handleAddCiudad,
+    handleDeleteCiudad,
+  } = useWeather();
 
   const formatWind = (wind) => {
     return `${Math.round(wind)} km/h`;
   };
+  const isFav = favCities.includes(weatherData.city);
+
+  const handleClick = () => {
+    if (isFav) {
+      handleDeleteCiudad(weatherData.city);
+    } else {
+      handleAddCiudad(weatherData.city);
+    }
+  };
+  console.log(isFav);
 
   return (
     <div className="current-weather">
+      <button className="icon-fav " onClick={handleClick}>
+        <StarSvg size={25} color={isFav && "#FFD23F"} />
+      </button>
       <img
         src={getIconUrl(weatherData.icon)}
         alt={weatherData?.description}

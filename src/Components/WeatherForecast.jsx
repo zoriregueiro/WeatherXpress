@@ -8,9 +8,11 @@ const WeatherForecast = ({ data, index }) => {
 
   const formatHour = (hour) => moment(hour * 1000).format("HH:mm");
 
+  const formatDate = (date) => moment(date).format("dddd");
+
   return (
     <div className={index < 1 ? "container-date" : "container-date-2"}>
-      {index < 1 ? "Próximas horas" : data.date}
+      {index > 0 && formatDate(data.date)}
       {data?.items?.map((item) => (
         <div className="container-next-hours">
           <img
@@ -22,7 +24,6 @@ const WeatherForecast = ({ data, index }) => {
             <p className="large-name ">
               {formatTemperature(item.main.temp, unit)}
             </p>
-            {/* <p className="small-name ">Temperatura</p> */}
           </div>
           <div className="content-container ">
             <p className="large-name ">{formatHour(item.dt)}</p>

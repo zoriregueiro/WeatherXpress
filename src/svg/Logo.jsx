@@ -6,7 +6,7 @@ export const LogpSvg = ({ size = 100 }) => {
       width={size}
       zoomAndPan="magnify"
       viewBox="0 0 375 112.499997"
-      height="120"
+      height="80"
       preserveAspectRatio="xMidYMid meet"
       version="1.0">
       <defs>

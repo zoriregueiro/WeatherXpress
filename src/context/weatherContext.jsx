@@ -1,6 +1,5 @@
 import React, { createContext, useContext } from "react";
 import { useWeatherData } from "../hooks/useWeatherData";
-
 const { VITE_ICON_WEATHER } = import.meta.env;
 
 const WeatherContext = createContext();
@@ -13,7 +12,6 @@ export const WeatherProvider = ({ children }) => {
     city,
     unit,
     weatherHourly,
-    timezone,
     handleDeleteData,
     handleOnChangeCity,
     handleOnChangeUnit,
@@ -33,7 +31,6 @@ export const WeatherProvider = ({ children }) => {
         city,
         unit,
         weatherHourly,
-        timezone,
         handleDeleteData,
         handleOnChangeCity,
         handleOnChangeUnit,

@@ -1,6 +1,7 @@
 import React, { useRef } from "react";
 import "../css/styles.scss";
 import { useWeather } from "../context/WeatherContext";
+import Switch from "../Components/Switch";
 
 const SelectCity = () => {
   const { handleOnChangeCity, error } = useWeather();
@@ -20,22 +21,26 @@ const SelectCity = () => {
     }
   };
   return (
-    <div className="search-window">
-      <p className="search-title">Consulta el tiempo en cualquier ciudad</p>
-      <div>
-        <div id="search-container" className="search-container">
-          <input
-            ref={inputRef}
-            type="text"
-            onKeyPress={handleKeyPress}
-            placeholder="Escribe una ciudad"
-            className="search-input"
-          />
-          <button onClick={handleSubmit}>Buscar</button>
+    <React.Fragment>
+      <Switch />
+
+      <div className="search-window">
+        <p className="search-title">Check the weather in any city</p>
+        <div>
+          <div id="search-container" className="search-container">
+            <input
+              ref={inputRef}
+              type="text"
+              onKeyPress={handleKeyPress}
+              placeholder="Search a city"
+              className="search-input"
+            />
+            <button onClick={handleSubmit}>Search</button>
+          </div>
+          {error && <div className="info-text">{error}</div>}
         </div>
-        {error && <div className="info-text">{error}</div>}
       </div>
-    </div>
+    </React.Fragment>
   );
 };
 export default SelectCity;

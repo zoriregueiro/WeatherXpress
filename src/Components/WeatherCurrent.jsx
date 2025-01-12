@@ -24,19 +24,15 @@ const WeatherCurrent = () => {
         <p className="large-name ">
           {formatTemperature(weatherData.temp, unit)}
         </p>
-        <p className="small-name ">Temperatura</p>
+        <p className="small-name ">Temperature</p>
       </div>
       <div className="content-container ">
         <p className="large-name ">{weatherData.humidity} %</p>
-        <p className="small-name ">Humedad</p>
-      </div>
-      <div className="content-container ">
-        <p className="large-name ">{weatherData.humidity} %</p>
-        <p className="small-name ">Humedad</p>
+        <p className="small-name ">Humidity</p>
       </div>
       <div className="content-container ">
         <p className="large-name ">{formatWind(weatherData.wind)} </p>
-        <p className="small-name ">Viento</p>
+        <p className="small-name ">Wind speed</p>
       </div>
     </div>
   );

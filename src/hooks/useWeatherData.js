@@ -13,13 +13,13 @@ export const useWeatherData = () => {
   const [loading, setLoading] = useState(defaultLoading);
   const [unit, setUnit] = useState("metric");
   const [weatherHourly, setWeatherHourly] = useState([]);
-  const [timezone, setTimezone] = useState(0);
+
   useEffect(() => {
     const getWeatherData = async () => {
       setLoading(true);
 
       if (city === "") {
-        setError("Por favor ingresa el nombre de una ciudad.");
+        setError("Please enter the name of a city.");
         return;
       }
 
@@ -40,12 +40,8 @@ export const useWeatherData = () => {
           country: currentData.sys.country,
         });
 
-        setTimezone(currentData.timezone);
-
         const lat = currentData.coord.lat;
         const lon = currentData.coord.lon;
-
-        console.log(lat, lon);
 
         const hourlyData = await getWeatherHourly(lat, lon, unit);
 
@@ -63,21 +59,12 @@ export const useWeatherData = () => {
           }));
         };
 
-        // const customArray = hourlyData?.list?.map((item) => ({
-        //   temp: item.main.temp,
-        //   icon: item.weather[0].icon,
-        //   humidity: item.main.humidity,
-        //   wind: item.wind.speed,
-        //   hour: item.dt,
-        //   description: item.weather[0].description,
-        // }));
-
         setWeatherHourly(groupByDayAsArray(hourlyData.list));
         setError("");
         navigate(`/weather-view`);
       } catch (err) {
         console.log(err);
-        setError("Ciudad no encontrada o error en la petición.");
+        setError("City not found or error in the request.");
         setWeatherData(null);
         setWeatherHourly(null);
       } finally {
@@ -85,7 +72,7 @@ export const useWeatherData = () => {
       }
     };
     getWeatherData();
-  }, [city]);
+  }, [city, unit]);
 
   const handleOnChangeCity = (item) => {
     setCity(item);
@@ -96,17 +83,17 @@ export const useWeatherData = () => {
   };
 
   const handleDeleteData = () => {
-    setLoadingDelete(true);
     try {
       setLoading((prev) => ({ ...prev, clean: true }));
       setCity("");
       setWeatherData("");
       setError("");
+      navigate("/");
     } catch (error) {
       addToast({
         title: t("Error"),
         type: "error",
-        description: t("Error al limpiar los datos"),
+        description: t("Error clearing data"),
       });
     } finally {
       setLoading((prev) => ({ ...prev, clean: false }));
@@ -118,7 +105,6 @@ export const useWeatherData = () => {
     city,
     unit,
     weatherHourly,
-    timezone,
     handleDeleteData,
     handleOnChangeCity,
     handleOnChangeUnit,

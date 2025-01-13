@@ -26,7 +26,6 @@ const WeatherCurrent = () => {
       handleAddCiudad(weatherData.city);
     }
   };
-  console.log(isFav);
 
   return (
     <div className="current-weather">

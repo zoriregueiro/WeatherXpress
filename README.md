@@ -57,6 +57,9 @@ VITE_ICON_WEATHER = https://openweathermap.org/img/wn/
 
 1. Al abrir la aplicación, verás un campo de búsqueda donde puedes ingresar el nombre de una ciudad.
 2. Haz clic en el botón "Search" o presiona Enter para obtener el clima actual de esa ciudad.
+   3.Seleciona uno de tus favoritos (en caso de tener ya alguno guardado)
 3. Los datos del clima, como la temperatura, la humedad y las condiciones, se mostrarán en la pantalla.
-4. En esta última pantalla se puede buscar otras ciudades.
-5. En ambas pantallas se puede modificar la unidad de medida de los grados, lo cual repercute en otros datos.
+4. Marca como favorito esa ciudad en la estrellita de la caja principal.
+5. En esta última pantalla se puede buscar otras ciudades.
+6. Vuelve a la home haciendo click en el logo o recargando la página actual.
+7. En ambas pantallas se puede modificar la unidad de medida de los grados, lo cual repercute en otros datos.

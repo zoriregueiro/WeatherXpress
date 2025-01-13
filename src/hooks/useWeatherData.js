@@ -73,7 +73,6 @@ export const useWeatherData = () => {
         setError("");
         navigate(`/weather-view/${locationCity}`);
       } catch (err) {
-        console.log(err);
         setError("City not found or error in the request.");
         setWeatherData(null);
         setWeatherHourly(null);

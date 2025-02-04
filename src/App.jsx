@@ -2,8 +2,8 @@ import React from "react";
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import { appRoutes } from "./Routes/allRoutes";
-import Header from "./Components/Header";
 import { WeatherProvider } from "./context/WeatherContext";
+import Header from "./Components/Header";
 
 function App() {
   return (

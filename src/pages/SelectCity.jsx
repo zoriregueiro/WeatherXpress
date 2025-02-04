@@ -4,7 +4,7 @@ import { useWeather } from "../context/WeatherContext";
 import Switch from "../Components/Switch";
 import FavCard from "../components/FavCard";
 import { MapSvg } from "../svg/Map";
-import { WeatherSvg } from "../svg/weather";
+import { WeatherSvg } from "../svg/Weather";
 import { EmptySvg } from "../svg/Empty";
 
 const SelectCity = () => {
